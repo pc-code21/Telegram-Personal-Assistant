@@ -1,0 +1,537 @@
+{
+  "name": "Telegram Personal Assistant",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -656,
+        16
+      ],
+      "id": "baba8a2f-a494-4b81-b134-d8200149e007",
+      "name": "Telegram Trigger",
+      "webhookId": "cad546bb-466a-46a2-8cbe-a7198e0e498b",
+      "credentials": {
+        "telegramApi": {
+          "id": "FRLQHD1Dmlt8CFx8",
+          "name": "Telegram account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.message.text }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "exists",
+                      "singleValue": true
+                    },
+                    "id": "77caf94c-cf77-4292-92ce-1c8d90eb3740"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "text"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "f70fcff9-9cb3-425a-b6f8-e5fb335bd1cb",
+                    "leftValue": "={{ $json.message.voice.file_id }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "exists",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "audio"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        -208,
+        -80
+      ],
+      "id": "41097040-bbb1-422e-99c9-8da177e0c5f5",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "54d9b241-b103-4867-b79b-944c6f08fe24",
+              "name": "text",
+              "value": "={{ $json.message.text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        240,
+        -176
+      ],
+      "id": "2e4a3c8a-1bc2-434b-89dd-ccec11c51fe1",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.text }}\n",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "=#Role\nyou are an assistant with access to multiple tools.\n\n#Behaviour\nyou respond conciseely and succintly in a friendly and approachable style.\n\n#Tools\nyou have access to multiple tools and always use the appropriate one depending on the task.\n\n##Gmail_Summary\nuse this tool to summarize emails according to user's ask.\n\n##Telegram search tool\nuse this tool to search about any information on internet."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        688,
+        -80
+      ],
+      "id": "c22e75d7-c514-4373-b9f7-fc920aa1e6c7",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        480,
+        144
+      ],
+      "id": "5e5fc84b-8046-44e2-894e-8421dc6f2337",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "Re4se9wXME5z5xoU",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "fileId": "={{ $json.message.voice.file_id }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        16,
+        16
+      ],
+      "id": "5bc658e0-3acb-41a9-8339-6bba9cb5c6ef",
+      "name": "Get a file",
+      "webhookId": "325e1512-302d-4a30-912f-40111433e42b",
+      "credentials": {
+        "telegramApi": {
+          "id": "DkJTNR3SWpDbTnOa",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "audio",
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-2.5-flash",
+          "mode": "list",
+          "cachedResultName": "models/gemini-2.5-flash"
+        },
+        "inputType": "binary",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        240,
+        16
+      ],
+      "id": "8758579f-b867-48a8-9ca7-4ab91835075f",
+      "name": "Transcribe a recording",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "Re4se9wXME5z5xoU",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        464,
+        -80
+      ],
+      "id": "e032b996-5e81-4a7b-92fd-28907bf973c0",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('Switch').item.json.message.chat.id }}",
+        "contextWindowLength": 10
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        640,
+        144
+      ],
+      "id": "20abf0c1-4276-479a-b4e5-7b6e20fbce83",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Switch').item.json.message.chat.id }}",
+        "text": "={{ $json.output }}",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "HTML"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1056,
+        -80
+      ],
+      "id": "869ab6d9-3092-4172-885b-eccf67aef0d7",
+      "name": "Send a text message",
+      "webhookId": "e205c6b3-4acd-4223-9b6b-1e9f2e12bf4f",
+      "retryOnFail": true,
+      "credentials": {
+        "telegramApi": {
+          "id": "DkJTNR3SWpDbTnOa",
+          "name": "Telegram account"
+        }
+      },
+      "onError": "continueRegularOutput",
+      "notes": "Error\n"
+    },
+    {
+      "parameters": {
+        "description": "Use this tool/agent to search about any information on internet.",
+        "workflowId": {
+          "__rl": true,
+          "value": "FuYRdeqA8mE3PXNi",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/FuYRdeqA8mE3PXNi",
+          "cachedResultName": "Telegram search tool"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        1008,
+        144
+      ],
+      "id": "d2e71109-f9ea-4235-b721-22e1c91cdf8e",
+      "name": "Call 'Telegram search tool'"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "501e06e5-5c4f-43a1-b6d2-d9ccf45cc77f",
+              "leftValue": "={{ $json.message.from.id }}",
+              "rightValue": "=8268741017",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -432,
+        16
+      ],
+      "id": "ba79e993-43be-41d7-ba2f-cc6f95606ca2",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "endpointUrl": "http://localhost:5678/mcp/f2f538b2-a7ce-4292-8dcb-0664aa265047",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.mcpClientTool",
+      "typeVersion": 1.2,
+      "position": [
+        880,
+        144
+      ],
+      "id": "721b4f07-59a5-42f9-8dcc-4335af861631",
+      "name": "Gmail MCP"
+    },
+    {
+      "parameters": {
+        "endpointUrl": "http://localhost:5678/mcp/f5fc255b-1ba2-47bf-ab25-f3b27b5856da",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.mcpClientTool",
+      "typeVersion": 1.2,
+      "position": [
+        768,
+        144
+      ],
+      "id": "06e0835e-e3c5-4101-bb0b-c3ea99372ed1",
+      "name": "Calendar MCP"
+    },
+    {
+      "parameters": {
+        "errorMessage": "Unauthorized access"
+      },
+      "type": "n8n-nodes-base.stopAndError",
+      "typeVersion": 1,
+      "position": [
+        -224,
+        112
+      ],
+      "id": "f5f0acdd-1a5d-4939-93c3-d2725560ac33",
+      "name": "Stop and Error"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Get a file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get a file": {
+      "main": [
+        [
+          {
+            "node": "Transcribe a recording",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Transcribe a recording": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call 'Telegram search tool'": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Stop and Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gmail MCP": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calendar MCP": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false,
+    "timeSavedMode": "fixed",
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": "pPaSWbrcspKuuHqx",
+    "timezone": "Indian/Reunion"
+  },
+  "versionId": "00a62c9a-bd50-4f48-9743-4a84e44a4652",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "facd81ed9a5c411014f61f7252536617bdf2e756ba71d3a1b531973872aa29e5"
+  },
+  "id": "Vomb6E3ePzoR7yS3",
+  "tags": []
+}
