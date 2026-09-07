@@ -1,0 +1,265 @@
+{
+  "name": "Gmail MCP Server",
+  "nodes": [
+    {
+      "parameters": {
+        "sendTo": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('To', ``, 'string') }}",
+        "subject": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Subject', ``, 'string') }}",
+        "emailType": "text",
+        "message": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Message', ``, 'string') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.2,
+      "position": [
+        32,
+        224
+      ],
+      "id": "441abc44-87c2-4b66-bdd3-4d82e0c508d3",
+      "name": "Send a message in Gmail4",
+      "webhookId": "382bf564-5dc1-48f3-8302-37aa1686f21e",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "1iUgzV7mHnnE4Thj",
+          "name": "Gmail account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "messageId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Message_ID', ``, 'string') }}"
+      },
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.2,
+      "position": [
+        192,
+        224
+      ],
+      "id": "5fd2cef4-1df3-48f3-a6a2-70fa9cd14c46",
+      "name": "Delete a message in Gmail",
+      "webhookId": "382bf564-5dc1-48f3-8302-37aa1686f21e",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "1iUgzV7mHnnE4Thj",
+          "name": "Gmail account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "returnAll": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Return_All', ``, 'boolean') }}",
+        "filters": {}
+      },
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.2,
+      "position": [
+        352,
+        224
+      ],
+      "id": "7fef2f53-43e0-4b97-9f65-4d678877b96d",
+      "name": "Get many messages in Gmail",
+      "webhookId": "382bf564-5dc1-48f3-8302-37aa1686f21e",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "1iUgzV7mHnnE4Thj",
+          "name": "Gmail account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "markAsRead",
+        "messageId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Message_ID', ``, 'string') }}"
+      },
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.2,
+      "position": [
+        512,
+        224
+      ],
+      "id": "ba833899-3216-4afc-814c-77961708a62a",
+      "name": "Mark a message as read in Gmail",
+      "webhookId": "382bf564-5dc1-48f3-8302-37aa1686f21e",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "1iUgzV7mHnnE4Thj",
+          "name": "Gmail account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "markAsUnread",
+        "messageId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Message_ID', ``, 'string') }}"
+      },
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.2,
+      "position": [
+        672,
+        224
+      ],
+      "id": "b4ba241b-d83b-4ff9-87df-5549a582476f",
+      "name": "Mark a message as unread in Gmail",
+      "webhookId": "382bf564-5dc1-48f3-8302-37aa1686f21e",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "1iUgzV7mHnnE4Thj",
+          "name": "Gmail account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "removeLabels",
+        "messageId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Message_ID', ``, 'string') }}"
+      },
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.2,
+      "position": [
+        832,
+        224
+      ],
+      "id": "42ad1faa-ca69-47e8-8fb0-3af808853b8f",
+      "name": "Remove label from message in Gmail",
+      "webhookId": "382bf564-5dc1-48f3-8302-37aa1686f21e",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "1iUgzV7mHnnE4Thj",
+          "name": "Gmail account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "reply",
+        "messageId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Message_ID', ``, 'string') }}",
+        "emailType": "text",
+        "message": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Message', ``, 'string') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.2,
+      "position": [
+        992,
+        224
+      ],
+      "id": "e7d04645-e896-45f1-8285-8f46fcde3819",
+      "name": "Reply to a message in Gmail",
+      "webhookId": "382bf564-5dc1-48f3-8302-37aa1686f21e",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "1iUgzV7mHnnE4Thj",
+          "name": "Gmail account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "path": "f2f538b2-a7ce-4292-8dcb-0664aa265047"
+      },
+      "type": "@n8n/n8n-nodes-langchain.mcpTrigger",
+      "typeVersion": 2,
+      "position": [
+        416,
+        0
+      ],
+      "id": "a50e4267-68b8-44aa-8149-12597cf0c00b",
+      "name": "MCP Server Trigger",
+      "webhookId": "f2f538b2-a7ce-4292-8dcb-0664aa265047"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Send a message in Gmail4": {
+      "ai_tool": [
+        [
+          {
+            "node": "MCP Server Trigger",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a message in Gmail": {
+      "ai_tool": [
+        [
+          {
+            "node": "MCP Server Trigger",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many messages in Gmail": {
+      "ai_tool": [
+        [
+          {
+            "node": "MCP Server Trigger",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mark a message as read in Gmail": {
+      "ai_tool": [
+        [
+          {
+            "node": "MCP Server Trigger",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mark a message as unread in Gmail": {
+      "ai_tool": [
+        [
+          {
+            "node": "MCP Server Trigger",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Remove label from message in Gmail": {
+      "ai_tool": [
+        [
+          {
+            "node": "MCP Server Trigger",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Reply to a message in Gmail": {
+      "ai_tool": [
+        [
+          {
+            "node": "MCP Server Trigger",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "7dfde973-df2a-4b4b-894e-043c8b3e45c6",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "facd81ed9a5c411014f61f7252536617bdf2e756ba71d3a1b531973872aa29e5"
+  },
+  "id": "L2DdexaEt03heGXc",
+  "tags": []
+}
