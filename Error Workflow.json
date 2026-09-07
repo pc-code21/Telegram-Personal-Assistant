@@ -1,0 +1,66 @@
+{
+  "name": "Error Workflow",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [
+        -112,
+        0
+      ],
+      "id": "248acb64-e0a7-400f-a111-4f37c6ad13ab",
+      "name": "Error Trigger"
+    },
+    {
+      "parameters": {
+        "sendTo": "pc808217@gmail.com",
+        "subject": "Error n8n",
+        "emailType": "text",
+        "message": "Unauthorized access to Telegram Personal Agent.",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        112,
+        0
+      ],
+      "id": "67814a91-83f7-4398-8b8a-5190921f52c3",
+      "name": "Send a message",
+      "webhookId": "80d51490-9388-40f2-a053-928a503c0850",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "1iUgzV7mHnnE4Thj",
+          "name": "Gmail account 2"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Error Trigger": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "5b314cf6-a8c8-4318-b77b-b93d7a72443b",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "facd81ed9a5c411014f61f7252536617bdf2e756ba71d3a1b531973872aa29e5"
+  },
+  "id": "pPaSWbrcspKuuHqx",
+  "tags": []
+}
